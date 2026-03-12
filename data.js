@@ -4224,15 +4224,29 @@ window.FILTERS =
   "gloveGroups": {
     "Coated": {
       "visibleFilters": ["Brand", "Coating", "Cut Level", "Gauge", "Requirements"],
-      "brands": ["Coloursafe", "Miscellaneous", "Planetsafe", "Touchsafe", "Watersafe"]
+      "brands": ["Coloursafe", "Miscellaneous", "Planetsafe", "Touchsafe", "Watersafe"],
+      "visibleOptions": {
+        "Coating": ["Crinkle Latex", "Foam Latex", "Latex", "Leather", "Nitrile", "Nitrile Foam", "Nitrile Micro Foam", "PU", "PVC", "Polymax", "Polymer", "Sandy Nitrile", "Smooth Nitrile", "TPE Palm Coating"],
+        "Cut Level": ["Cut 1", "Cut 2", "Cut C", "Cut D", "Cut E", "Cut F", "Cut level A", "Cut level B"],
+        "Gauge": ["10", "13", "15", "18", "2 Stand Seamless", "7", "8oz Cotton Drill"],
+        "Requirements": ["Anti Vibration", "Contact Heat", "Contact cold", "Cut protection", "Foodsafe", "Impact", "Minimal Risk", "Needle Resistant", "Thermal", "Touchscreen", "Vend Ready", "Vibration", "Waterproof"]
+      }
     },
     "Leather": {
       "visibleFilters": ["Brand", "Leather", "Requirements"],
-      "brands": ["Predator", "Specialist", "Miscellaneous"]
+      "brands": ["Predator", "Specialist", "Miscellaneous"],
+      "visibleOptions": {
+        "Leather": ["Deer Hide", "Goat Skin", "Hide Leather", "Split Leather"],
+        "Requirements": ["Anti Vibration", "Contact Heat", "Contact cold", "Cut protection", "Foodsafe", "Impact", "Minimal Risk", "Needle Resistant", "Thermal", "Touchscreen", "Vend Ready", "Vibration", "Waterproof"]
+      }
     },
     "Disposable": {
       "visibleFilters": ["Requirements", "Style"],
-      "brands": ["Nitrile"]
+      "brands": ["Nitrile"],
+      "visibleOptions": {
+        "Requirements": ["Anti Vibration", "Contact Heat", "Contact cold", "Cut protection", "Foodsafe", "Impact", "Minimal Risk", "Needle Resistant", "Thermal", "Touchscreen", "Vend Ready", "Vibration", "Waterproof"],
+        "Style": ["Diamond grip", "Disposable", "Latex free", "Powder free", "Silicone free", "Sleeves"]
+      }
     }
   }
 };

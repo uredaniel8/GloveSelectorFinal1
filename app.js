@@ -366,6 +366,9 @@
       if (cat === BRAND_CATEGORY && groupConfig && Array.isArray(groupConfig.brands)) {
         const allowedBrands = new Set(groupConfig.brands);
         options = options.filter((o) => allowedBrands.has(o));
+      } else if (groupConfig && groupConfig.visibleOptions && Array.isArray(groupConfig.visibleOptions[cat])) {
+        const allowedOptions = new Set(groupConfig.visibleOptions[cat]);
+        options = options.filter((o) => allowedOptions.has(o));
       }
       renderFilterList(optionsWrap, options, featureState[cat], updateFeatureResults, 'chip');
     });
