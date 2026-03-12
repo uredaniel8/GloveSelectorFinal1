@@ -168,6 +168,7 @@
       </div>
       <div class="admin-controls">
         <button class="btn btn-white" id="btnManageFilters">⚙️ Manage Filters</button>
+        <button class="btn btn-white" id="btnGloveGroups">🏷️ Glove Groups</button>
         <button class="btn btn-white" id="btnExport">💾 Export data.js</button>
         <button class="btn btn-success" id="btnExportExcel">📊 Export Excel</button>
         <button class="btn btn-primary" id="btnNewProduct">+ New Product</button>
@@ -280,6 +281,25 @@
         <!-- Category Accordion/List -->
         <div id="catManagerList"></div>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOVE GROUP SETTINGS MODAL -->
+  <div id="gloveGroupModal" class="modal-overlay">
+    <div class="modal" style="max-width: 700px; height: 85vh;">
+      <div class="modal-header">
+        <h2 class="modal-title">Glove Group Settings</h2>
+        <button class="btn btn-white" style="padding:4px 8px;" id="gloveGroupModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px; color:#6b7280; margin-bottom:16px;">
+          Configure which filter categories and brands are shown for each glove group on the Search by Features tab.
+        </p>
+        <div id="gloveGroupManagerList"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btnSaveGloveGroups">Save Glove Group Settings</button>
       </div>
     </div>
   </div>

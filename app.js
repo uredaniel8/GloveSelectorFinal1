@@ -120,6 +120,28 @@
   FEATURE_CATEGORIES.forEach((c) => (featureState[c] = new Set()));
   const industryState = new Set();
 
+  // --- Glove group state ---
+  let activeGloveGroup = 'ALL';
+
+  function matchesGloveGroup(glove) {
+    if (activeGloveGroup === 'ALL') return true;
+    if (activeGloveGroup === 'Leather') {
+      return glove.coating === 'Leather';
+    }
+    if (activeGloveGroup === 'Disposable') {
+      return Array.isArray(glove.style) && glove.style.includes('Disposable');
+    }
+    if (activeGloveGroup === 'Coated') {
+      return glove.coating !== 'Leather' && !(Array.isArray(glove.style) && glove.style.includes('Disposable'));
+    }
+    return true;
+  }
+
+  function getActiveGroupConfig() {
+    const groups = FILTERS.gloveGroups || {};
+    return groups[activeGloveGroup] || null;
+  }
+
   function renderFilterList(container, options, selectedSet, onChange, mode) {
     if (!container) return;
     container.innerHTML = '';
@@ -178,6 +200,7 @@
   };
 
   function matchesFeatureFilters(glove) {
+    if (!matchesGloveGroup(glove)) return false;
     for (const cat of FEATURE_CATEGORIES) {
       const selected = featureState[cat];
       if (!selected || selected.size === 0) continue;
@@ -313,7 +336,11 @@
     const root = els.featureFiltersRoot;
     if (!root) return;
     root.innerHTML = '';
-    FEATURE_CATEGORIES.forEach((cat) => {
+    const groupConfig = getActiveGroupConfig();
+    const visibleCats = groupConfig
+      ? FEATURE_CATEGORIES.filter((c) => groupConfig.visibleFilters.includes(c))
+      : FEATURE_CATEGORIES;
+    visibleCats.forEach((cat) => {
       const section = document.createElement('div');
       section.className = 'filter-section collapsed';
       const header = document.createElement('button');
@@ -335,7 +362,12 @@
       section.appendChild(body);
       root.appendChild(section);
       if (!featureState[cat]) featureState[cat] = new Set();
-      renderFilterList(optionsWrap, getCategoryOptions(cat), featureState[cat], updateFeatureResults, 'chip');
+      let options = getCategoryOptions(cat);
+      if (cat === BRAND_CATEGORY && groupConfig && Array.isArray(groupConfig.brands)) {
+        const allowedBrands = new Set(groupConfig.brands);
+        options = options.filter((o) => allowedBrands.has(o));
+      }
+      renderFilterList(optionsWrap, options, featureState[cat], updateFeatureResults, 'chip');
     });
     initCollapsibleFilters();
   }
@@ -826,7 +858,52 @@
   if (els.clearFeatures) els.clearFeatures.addEventListener('click', clearFeatureFilters);
   if (els.clearIndustry) els.clearIndustry.addEventListener('click', clearIndustryFilters);
 
+  // --- Glove group tile wiring ---
+  function initGloveGroupTiles() {
+    const tilesContainer = document.getElementById('glove-group-tiles');
+    if (!tilesContainer) return;
+    const groups = FILTERS.gloveGroups || {};
+    const groupNames = Object.keys(groups);
+    // Only show tiles if gloveGroups is configured
+    if (groupNames.length === 0) {
+      tilesContainer.classList.add('glove-group-tiles--hidden');
+      return;
+    }
+    // Build tiles dynamically from FILTERS.gloveGroups
+    tilesContainer.innerHTML = '';
+    const allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'glove-group-tile glove-group-tile--active';
+    allBtn.dataset.group = 'ALL';
+    allBtn.textContent = 'ALL';
+    tilesContainer.appendChild(allBtn);
+    groupNames.forEach((name) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'glove-group-tile';
+      btn.dataset.group = name;
+      btn.textContent = name;
+      tilesContainer.appendChild(btn);
+    });
+    tilesContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.glove-group-tile');
+      if (!btn) return;
+      const group = btn.dataset.group || 'ALL';
+      if (group === activeGloveGroup) return;
+      activeGloveGroup = group;
+      // Update active tile styling
+      tilesContainer.querySelectorAll('.glove-group-tile').forEach((t) => {
+        t.classList.toggle('glove-group-tile--active', t.dataset.group === group);
+      });
+      // Clear active filter selections when switching groups
+      FEATURE_CATEGORIES.forEach((c) => featureState[c].clear());
+      renderFeatureFilters();
+      updateFeatureResults();
+    });
+  }
+
   function init() {
+    initGloveGroupTiles();
     renderFeatureFilters();
     renderIndustryFilters();
     updateFeatureResults();
