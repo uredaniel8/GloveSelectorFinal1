@@ -949,15 +949,17 @@
   function initCollapsibleFilters() {
     const featuresRoot = document.getElementById('filters-features');
     if (!featuresRoot) return;
-    const toggleAllBtn =
+    let toggleAllBtn =
       featuresRoot.querySelector('#collapse-all-features') ||
       featuresRoot.querySelector('#collapse-all') ||
       featuresRoot.querySelector('#collapseAll') ||
       featuresRoot.querySelector('[data-action="toggle-collapse-all"]') ||
       featuresRoot.querySelector('.collapse-all-btn') ||
       Array.from(featuresRoot.querySelectorAll('button')).find(b => /\b(collapse|expand)\s+all\b/i.test(b.textContent || ''));
-    const sections = Array.from(featuresRoot.querySelectorAll('.filter-section'));
-    if (sections.length === 0) return;
+    function getSections() {
+      return Array.from(document.querySelectorAll('#feature-filters-root .filter-section'));
+    }
+    if (getSections().length === 0) return;
     function setPuck(section) {
       const header = section.querySelector('.filter-section-header');
       if (!header) return;
@@ -968,24 +970,25 @@
       header.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
     }
     function allCollapsed() {
-      return sections.every(s => s.classList.contains('collapsed'));
+      return getSections().every(s => s.classList.contains('collapsed'));
     }
     function updateToggleAllButton() {
       if (!toggleAllBtn) return;
+      const currentSections = getSections();
       const nextMode = allCollapsed() ? 'expand' : 'collapse';
       toggleAllBtn.dataset.mode = nextMode;
       toggleAllBtn.textContent = nextMode === 'expand' ? 'Expand all' : 'Collapse all';
-      toggleAllBtn.disabled = sections.length === 0;
+      toggleAllBtn.disabled = currentSections.length === 0;
     }
     function collapseAll() {
-      sections.forEach(s => { s.classList.add('collapsed'); setPuck(s); });
+      getSections().forEach(s => { s.classList.add('collapsed'); setPuck(s); });
       updateToggleAllButton();
     }
     function expandAll() {
-      sections.forEach(s => { s.classList.remove('collapsed'); setPuck(s); });
+      getSections().forEach(s => { s.classList.remove('collapsed'); setPuck(s); });
       updateToggleAllButton();
     }
-    sections.forEach((section) => {
+    getSections().forEach((section) => {
       const header = section.querySelector('.filter-section-header');
       if (!header) return;
       if (header.dataset.boundCollapse === '1') return;
@@ -998,8 +1001,10 @@
         updateToggleAllButton();
       });
     });
-    if (toggleAllBtn && toggleAllBtn.dataset.boundCollapseAll !== '1') {
-      toggleAllBtn.dataset.boundCollapseAll = '1';
+    if (toggleAllBtn) {
+      const newBtn = toggleAllBtn.cloneNode(true);
+      toggleAllBtn.parentNode.replaceChild(newBtn, toggleAllBtn);
+      toggleAllBtn = newBtn;
       toggleAllBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (allCollapsed()) expandAll();
