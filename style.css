@@ -1590,49 +1590,104 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   justify-content: flex-end;
   margin-bottom: 12px;
+  position: relative;
 }
 
 .glove-group-tile {
-  padding: 0.32rem 0.75rem;
+  padding: 0.55rem 1.4rem;
   border-radius: 999px;
-  border: 1px solid #cbd5e1;
+  border: 2px solid var(--j1-blue);
   background: #ffffff;
   color: var(--j1-blue);
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1;
   height: auto;
   align-self: center;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0, 58, 112, 0.15);
+  transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s;
 }
 
 .glove-group-tile:hover {
   background: #e8f0f7;
-  border-color: #94a3b8;
+  border-color: var(--j1-blue);
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 58, 112, 0.22);
 }
 
 .glove-group-tile--active {
   background: var(--j1-blue);
   color: #ffffff;
   border-color: var(--j1-blue);
-  box-shadow: 0 1px 3px rgba(0, 58, 112, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 58, 112, 0.35);
 }
 
 .glove-group-tile--active:hover {
   background: var(--j1-blue-dark);
   border-color: var(--j1-blue-dark);
+  transform: scale(1.05);
 }
 
 /* Backward compat: hide tiles when no gloveGroups configured */
 .glove-group-tiles--hidden {
   display: none;
+}
+
+/* --- Glove group onboarding tooltip --- */
+@keyframes gloveTooltipFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.glove-group-tooltip {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 200;
+  background: var(--j1-blue);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.65rem 1rem 0.65rem 0.9rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 58, 112, 0.28);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: gloveTooltipFadeIn 0.25s ease both;
+}
+
+.glove-group-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 24px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--j1-blue);
+}
+
+.glove-group-tooltip-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0 0 0.2rem;
+  margin-left: auto;
+}
+
+.glove-group-tooltip-close:hover {
+  color: #ffffff;
 }
 
 /* --- Features tab: make Collapse/Expand/Clear controls look like pill buttons --- */

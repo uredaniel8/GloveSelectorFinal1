@@ -892,6 +892,12 @@
       const btn = e.target.closest('.glove-group-tile');
       if (!btn) return;
       const group = btn.dataset.group || 'ALL';
+      // Auto-dismiss tooltip when user clicks a group button
+      const tooltip = tilesContainer.querySelector('.glove-group-tooltip');
+      if (tooltip) {
+        localStorage.setItem('gloveGroupTooltipDismissed', 'true');
+        tooltip.remove();
+      }
       if (group === activeGloveGroup) return;
       activeGloveGroup = group;
       // Update active tile styling
@@ -903,6 +909,24 @@
       renderFeatureFilters();
       updateFeatureResults();
     });
+
+    // Onboarding tooltip
+    if (!localStorage.getItem('gloveGroupTooltipDismissed')) {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'glove-group-tooltip';
+      const msg = document.createTextNode('Select which product group you are looking for here.');
+      tooltip.appendChild(msg);
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'glove-group-tooltip-close';
+      closeBtn.setAttribute('aria-label', 'Dismiss');
+      closeBtn.textContent = '\u2715';
+      tooltip.appendChild(closeBtn);
+      tilesContainer.appendChild(tooltip);
+      closeBtn.addEventListener('click', () => {
+        localStorage.setItem('gloveGroupTooltipDismissed', 'true');
+        tooltip.remove();
+      });
+    }
   }
 
   function init() {
