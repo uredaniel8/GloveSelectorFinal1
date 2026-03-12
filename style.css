@@ -1591,10 +1591,8 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  justify-content: center;
+  justify-content: flex-end;
   margin-bottom: 12px;
-  grid-column: 2;
-  align-self: start;
 }
 
 .glove-group-tile {
