@@ -315,7 +315,7 @@
     root.innerHTML = '';
     FEATURE_CATEGORIES.forEach((cat) => {
       const section = document.createElement('div');
-      section.className = 'filter-section';
+      section.className = 'filter-section collapsed';
       const header = document.createElement('button');
       header.className = 'filter-section-header';
       header.type = 'button';
