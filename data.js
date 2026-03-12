@@ -4220,5 +4220,19 @@ window.FILTERS =
     "Style",
     "Leather",
     "Gauge"
-  ]
+  ],
+  "gloveGroups": {
+    "Coated": {
+      "visibleFilters": ["Brand", "Coating", "Cut Level", "Gauge", "Requirements"],
+      "brands": ["Coloursafe", "Miscellaneous", "Planetsafe", "Touchsafe", "Watersafe"]
+    },
+    "Leather": {
+      "visibleFilters": ["Brand", "Leather", "Requirements"],
+      "brands": ["Predator", "Specialist", "Miscellaneous"]
+    },
+    "Disposable": {
+      "visibleFilters": ["Requirements", "Style"],
+      "brands": ["Nitrile"]
+    }
+  }
 };

@@ -1584,6 +1584,52 @@ body {
   #poster-a4 [id^="poster-company-box-line-"] { white-space: pre-line; }
 }
 
+/* --- Glove group tiles --- */
+.glove-group-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.glove-group-tile {
+  padding: 0.32rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--j1-blue);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.glove-group-tile:hover {
+  background: #e8f0f7;
+  border-color: #94a3b8;
+}
+
+.glove-group-tile--active {
+  background: var(--j1-blue);
+  color: #ffffff;
+  border-color: var(--j1-blue);
+  box-shadow: 0 1px 3px rgba(0, 58, 112, 0.25);
+}
+
+.glove-group-tile--active:hover {
+  background: var(--j1-blue-dark);
+  border-color: var(--j1-blue-dark);
+}
+
+/* Backward compat: hide tiles when no gloveGroups configured */
+.glove-group-tiles--hidden {
+  display: none;
+}
+
 /* --- Features tab: make Collapse/Expand/Clear controls look like pill buttons --- */
 #filters-features .filters-title-row {
   gap: 10px;
