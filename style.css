@@ -70,7 +70,7 @@ body {
 /* Main shell + tabs */
 
 .main-shell {
-  max-width: 1700px; /* widened to fit 7 contact cards on one row */
+  max-width: 1800px; /* widened to fit 7 contact cards on one row */
   margin: 1.5rem auto 1.5rem;
   padding: 0 1.5rem;
 }
@@ -518,7 +518,7 @@ body {
 
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
 }
 
@@ -531,6 +531,7 @@ body {
   flex-direction: column;
   gap: 0.45rem;
   min-height: 320px;
+  max-width: 320px;
 }
 
 .glove-card::before {
