@@ -252,9 +252,16 @@
 
     const meta = document.createElement('div');
     meta.className = 'glove-meta';
-    const brand = glove.brand ? `Brand: ${glove.brand}` : '';
-    const sizes = glove.sizes ? `Sizes: ${glove.sizes}` : '';
-    meta.textContent = [brand, sizes].filter(Boolean).join(' • ');
+    if (glove.brand) {
+      const brandLine = document.createElement('span');
+      brandLine.textContent = `Brand: ${glove.brand}`;
+      meta.appendChild(brandLine);
+    }
+    if (glove.sizes) {
+      const sizesLine = document.createElement('span');
+      sizesLine.textContent = `Sizes: ${glove.sizes}`;
+      meta.appendChild(sizesLine);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'glove-actions';
@@ -614,25 +621,23 @@
       const cutVal = (glove.cutLevel ?? '').toString().trim();
       const rawPrice = posterPrices.get(code) || '';
       const priceVal = String(rawPrice || '').trim();
-      if (cutVal || priceVal) {
-        const row = document.createElement('div');
-        row.className = 'poster-meta-row poster-meta-row--cut';
-        const k = document.createElement('span');
-        k.className = 'poster-meta-key';
-        k.textContent = 'Cut:';
-        const v = document.createElement('span');
-        v.className = 'poster-meta-val poster-meta-cut-val';
-        v.textContent = cutVal || '—';
-        row.appendChild(k);
-        row.appendChild(v);
-        if (priceVal) {
-          const p = document.createElement('span');
-          p.className = 'poster-price-inline';
-          p.textContent = priceVal.startsWith('£') ? priceVal : `£${priceVal}`;
-          row.appendChild(p);
-        }
-        meta.appendChild(row);
+      const row = document.createElement('div');
+      row.className = 'poster-meta-row poster-meta-row--cut';
+      const k = document.createElement('span');
+      k.className = 'poster-meta-key';
+      k.textContent = 'Cut:';
+      const v = document.createElement('span');
+      v.className = 'poster-meta-val poster-meta-cut-val';
+      v.textContent = cutVal || '—';
+      row.appendChild(k);
+      row.appendChild(v);
+      if (priceVal) {
+        const p = document.createElement('span');
+        p.className = 'poster-price-inline';
+        p.textContent = priceVal.startsWith('£') ? priceVal : `£${priceVal}`;
+        row.appendChild(p);
       }
+      meta.appendChild(row);
       if (!meta.children.length) meta.style.display = 'none';
 
       item.appendChild(cap);
