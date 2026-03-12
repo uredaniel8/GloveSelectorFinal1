@@ -1442,6 +1442,10 @@ body {
   .poster-a4 {
     max-width: 100%;
   }
+
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
 }
 
 /* Print – force single A4 landscape page with poster only */
