@@ -1007,6 +1007,23 @@
       });
     }
     updateToggleAllButton();
+
+    // Also bind collapse handlers for #filters-industry (same pattern, no toggle-all button)
+    const industryRoot = document.getElementById('filters-industry');
+    if (industryRoot) {
+      industryRoot.querySelectorAll('.filter-section').forEach((section) => {
+        const header = section.querySelector('.filter-section-header');
+        if (!header) return;
+        if (header.dataset.boundCollapse === '1') return;
+        header.dataset.boundCollapse = '1';
+        setPuck(section);
+        header.addEventListener('click', (e) => {
+          if (e.target && e.target !== header && e.target.closest('input,select,textarea,a')) return;
+          section.classList.toggle('collapsed');
+          setPuck(section);
+        });
+      });
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCollapsibleFilters);
