@@ -1585,11 +1585,14 @@ body {
 }
 
 /* --- Glove group tiles --- */
+/* grid-column: 2 places this in the results column of .layout's 2-column grid (300px | 1fr) */
 .glove-group-tiles {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+  grid-column: 2;
 }
 
 .glove-group-tile {
