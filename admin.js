@@ -109,6 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       // Ensure gloveGroups exists (backward compat)
       if (!filters.gloveGroups) filters.gloveGroups = {};
+      // Ensure visibleOptions exists on each group (backward compat)
+      Object.values(filters.gloveGroups).forEach(cfg => {
+        if (!cfg.visibleOptions) cfg.visibleOptions = {};
+      });
       
       // Ensure specific categories exist
       if (!filters.categories['Brand']) filters.categories['Brand'] = [];
@@ -912,6 +916,51 @@ ${JSON.stringify(cleanFilters, null, 2)};
       });
       panelBody.appendChild(brandsGrid);
 
+      // Filter Options per Category section
+      const optionsTitle = document.createElement('div');
+      optionsTitle.className = 'filter-group-title';
+      optionsTitle.style.marginTop = '14px';
+      optionsTitle.textContent = 'Filter Options per Category';
+      panelBody.appendChild(optionsTitle);
+
+      const OPTION_EXCLUDED_CATS = ['Brand', 'Industry'];
+      const visibleCats = (groupCfg.visibleFilters || []).filter(c => !OPTION_EXCLUDED_CATS.includes(c));
+      visibleCats.forEach(cat => {
+        const catWrap = document.createElement('div');
+        catWrap.style.cssText = 'margin-top:10px; border:1px solid #e5e7eb; border-radius:6px; overflow:hidden;';
+
+        const catHeader = document.createElement('div');
+        catHeader.style.cssText = 'background:#f3f4f6; padding:8px 12px; font-size:13px; font-weight:600; color:#374151;';
+        catHeader.textContent = cat;
+        catWrap.appendChild(catHeader);
+
+        const catGrid = document.createElement('div');
+        catGrid.className = 'check-grid';
+        catGrid.style.padding = '8px 12px';
+        const catOptions = (filters.categories[cat] || []).slice().sort();
+        const savedOpts = groupCfg.visibleOptions && Array.isArray(groupCfg.visibleOptions[cat])
+          ? groupCfg.visibleOptions[cat]
+          : null;
+        catOptions.forEach(opt => {
+          const label = document.createElement('label');
+          label.className = 'check-label';
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.dataset.group = groupName;
+          cb.dataset.type = 'option';
+          cb.dataset.cat = cat;
+          cb.dataset.value = opt;
+          cb.checked = savedOpts === null || savedOpts.includes(opt);
+          const span = document.createElement('span');
+          span.textContent = opt;
+          label.appendChild(cb);
+          label.appendChild(span);
+          catGrid.appendChild(label);
+        });
+        catWrap.appendChild(catGrid);
+        panelBody.appendChild(catWrap);
+      });
+
       panel.appendChild(panelBody);
       container.appendChild(panel);
     });
@@ -929,10 +978,20 @@ ${JSON.stringify(cleanFilters, null, 2)};
       const type = cb.dataset.type;
       const value = cb.dataset.value;
       if (!group || !type || !value) return;
-      if (!newGroups[group]) newGroups[group] = { visibleFilters: [], brands: [] };
+      if (!newGroups[group]) newGroups[group] = { visibleFilters: [], brands: [], visibleOptions: {} };
       if (cb.checked) {
         if (type === 'filter') newGroups[group].visibleFilters.push(value);
         else if (type === 'brand') newGroups[group].brands.push(value);
+      }
+      if (type === 'option') {
+        const cat = cb.dataset.cat;
+        if (!cat) return;
+        if (!Array.isArray(newGroups[group].visibleOptions[cat])) {
+          newGroups[group].visibleOptions[cat] = [];
+        }
+        if (cb.checked) {
+          newGroups[group].visibleOptions[cat].push(value);
+        }
       }
     });
     filters.gloveGroups = newGroups;
