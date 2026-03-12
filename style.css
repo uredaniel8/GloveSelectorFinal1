@@ -253,6 +253,12 @@ body {
 .brand-range-card--touchsafe {
   background: radial-gradient(circle at top left, #dfe9ff, #b6ccf3);
 }
+.brand-range-card--planetsafe {
+  background: radial-gradient(circle at top left, #d4edda, #a3d9a5);
+}
+.brand-range-card--mercator {
+  background: radial-gradient(circle at top left, #fce4ec, #f8bbd0);
+}
 
 /* hand icon */
 .brand-range-icon {
