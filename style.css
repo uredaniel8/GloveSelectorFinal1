@@ -1658,8 +1658,8 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 1 1 auto;
-  margin-right: 0;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .glove-group-hint__text {
@@ -1671,9 +1671,8 @@ body {
 }
 
 .glove-group-hint__arrow {
-  flex: 1 1 auto;
+  flex-shrink: 0;
   overflow: visible;
-  min-width: 0;
 }
 
 /* --- Features tab: make Collapse/Expand/Clear controls look like pill buttons --- */
