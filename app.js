@@ -900,7 +900,6 @@
       // Auto-dismiss tooltip when user clicks a group button
       const tooltip = tilesContainer.querySelector('.glove-group-tooltip');
       if (tooltip) {
-        localStorage.setItem('gloveGroupTooltipDismissed', 'true');
         tooltip.remove();
       }
       if (group === activeGloveGroup) return;
@@ -916,8 +915,7 @@
     });
 
     // Onboarding tooltip
-    if (!localStorage.getItem('gloveGroupTooltipDismissed')) {
-      const tooltip = document.createElement('div');
+    const tooltip = document.createElement('div');
       tooltip.className = 'glove-group-tooltip';
       const msg = document.createTextNode('Select which product group you are looking for here.');
       tooltip.appendChild(msg);
@@ -928,10 +926,8 @@
       tooltip.appendChild(closeBtn);
       tilesContainer.appendChild(tooltip);
       closeBtn.addEventListener('click', () => {
-        localStorage.setItem('gloveGroupTooltipDismissed', 'true');
         tooltip.remove();
       });
-    }
   }
 
   function init() {
