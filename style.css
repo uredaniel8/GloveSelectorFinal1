@@ -1653,55 +1653,35 @@ body {
   display: none;
 }
 
-/* --- Glove group onboarding tooltip --- */
-@keyframes gloveTooltipFadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.glove-group-tooltip {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  z-index: 200;
-  background: var(--j1-blue);
-  color: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.65rem 1rem 0.65rem 0.9rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0, 58, 112, 0.28);
-  white-space: nowrap;
+/* --- Glove group permanent hint --- */
+.glove-group-hint {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  animation: gloveTooltipFadeIn 0.25s ease both;
+  gap: 6px;
+  margin-right: auto;
+  max-width: 220px;
 }
 
-.glove-group-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  right: 24px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid var(--j1-blue);
+.glove-group-hint__text {
+  color: #e67e22;
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
-.glove-group-tooltip-close {
+.glove-group-hint__arrow {
   flex-shrink: 0;
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 0 0 0.2rem;
-  margin-left: auto;
+  overflow: visible;
 }
 
-.glove-group-tooltip-close:hover {
-  color: #ffffff;
+@media (max-width: 600px) {
+  .glove-group-hint {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    justify-content: center;
+  }
 }
 
 /* --- Features tab: make Collapse/Expand/Clear controls look like pill buttons --- */

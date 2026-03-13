@@ -897,11 +897,6 @@
       const btn = e.target.closest('.glove-group-tile');
       if (!btn) return;
       const group = btn.dataset.group || 'ALL';
-      // Auto-dismiss tooltip when user clicks a group button
-      const tooltip = tilesContainer.querySelector('.glove-group-tooltip');
-      if (tooltip) {
-        tooltip.remove();
-      }
       if (group === activeGloveGroup) return;
       activeGloveGroup = group;
       // Update active tile styling
@@ -914,20 +909,36 @@
       updateFeatureResults();
     });
 
-    // Onboarding tooltip
-    const tooltip = document.createElement('div');
-      tooltip.className = 'glove-group-tooltip';
-      const msg = document.createTextNode('Select which product group you are looking for here.');
-      tooltip.appendChild(msg);
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'glove-group-tooltip-close';
-      closeBtn.setAttribute('aria-label', 'Dismiss');
-      closeBtn.textContent = '\u2715';
-      tooltip.appendChild(closeBtn);
-      tilesContainer.appendChild(tooltip);
-      closeBtn.addEventListener('click', () => {
-        tooltip.remove();
-      });
+    // Permanent hint
+    const hint = document.createElement('div');
+    hint.className = 'glove-group-hint';
+    const hintText = document.createElement('span');
+    hintText.className = 'glove-group-hint__text';
+    hintText.textContent = 'Remember to select your product group to narrow selection and filtering options';
+    const hintArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    hintArrow.setAttribute('class', 'glove-group-hint__arrow');
+    hintArrow.setAttribute('viewBox', '0 0 60 36');
+    hintArrow.setAttribute('width', '60');
+    hintArrow.setAttribute('height', '36');
+    hintArrow.setAttribute('aria-hidden', 'true');
+    const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    arrowPath.setAttribute('d', 'M4,28 Q12,6 52,16');
+    arrowPath.setAttribute('stroke', '#e67e22');
+    arrowPath.setAttribute('stroke-width', '2.5');
+    arrowPath.setAttribute('fill', 'none');
+    arrowPath.setAttribute('stroke-linecap', 'round');
+    const arrowHead = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    arrowHead.setAttribute('d', 'M46,10 L54,17 L44,20');
+    arrowHead.setAttribute('stroke', '#e67e22');
+    arrowHead.setAttribute('stroke-width', '2.5');
+    arrowHead.setAttribute('fill', 'none');
+    arrowHead.setAttribute('stroke-linecap', 'round');
+    arrowHead.setAttribute('stroke-linejoin', 'round');
+    hintArrow.appendChild(arrowPath);
+    hintArrow.appendChild(arrowHead);
+    hint.appendChild(hintText);
+    hint.appendChild(hintArrow);
+    tilesContainer.insertBefore(hint, tilesContainer.firstChild);
   }
 
   function init() {
