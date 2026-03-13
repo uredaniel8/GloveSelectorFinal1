@@ -1656,14 +1656,14 @@ body {
 /* --- Glove group permanent hint --- */
 .glove-group-hint {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-right: auto;
-  max-width: 220px;
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 260px;
+  margin-bottom: 6px;
 }
 
 .glove-group-hint__text {
-  color: #e67e22;
+  color: #dc2626;
   font-size: 0.78rem;
   font-style: italic;
   font-weight: 500;
@@ -1679,7 +1679,7 @@ body {
   .glove-group-hint {
     width: 100%;
     max-width: 100%;
-    margin-right: 0;
+    margin-bottom: 4px;
     justify-content: center;
   }
 }
