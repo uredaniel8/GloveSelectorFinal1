@@ -918,8 +918,9 @@
     const hintArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     hintArrow.setAttribute('class', 'glove-group-hint__arrow');
     hintArrow.setAttribute('viewBox', '0 0 50 30');
-    hintArrow.setAttribute('width', '50');
+    hintArrow.setAttribute('width', '100%');
     hintArrow.setAttribute('height', '30');
+    hintArrow.setAttribute('preserveAspectRatio', 'none');
     hintArrow.setAttribute('aria-hidden', 'true');
     const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     arrowPath.setAttribute('d', 'M4,15 Q26,4 44,15');
