@@ -917,18 +917,18 @@
     hintText.textContent = 'Remember to select your product group to narrow selection and filtering options';
     const hintArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     hintArrow.setAttribute('class', 'glove-group-hint__arrow');
-    hintArrow.setAttribute('viewBox', '0 0 36 50');
-    hintArrow.setAttribute('width', '36');
-    hintArrow.setAttribute('height', '50');
+    hintArrow.setAttribute('viewBox', '0 0 50 30');
+    hintArrow.setAttribute('width', '50');
+    hintArrow.setAttribute('height', '30');
     hintArrow.setAttribute('aria-hidden', 'true');
     const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    arrowPath.setAttribute('d', 'M6,4 Q10,28 28,44');
+    arrowPath.setAttribute('d', 'M4,15 Q26,4 44,15');
     arrowPath.setAttribute('stroke', '#dc2626');
     arrowPath.setAttribute('stroke-width', '2.5');
     arrowPath.setAttribute('fill', 'none');
     arrowPath.setAttribute('stroke-linecap', 'round');
     const arrowHead = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    arrowHead.setAttribute('d', 'M20,42 L28,48 L32,38');
+    arrowHead.setAttribute('d', 'M36,8 L44,15 L36,22');
     arrowHead.setAttribute('stroke', '#dc2626');
     arrowHead.setAttribute('stroke-width', '2.5');
     arrowHead.setAttribute('fill', 'none');
@@ -938,7 +938,7 @@
     hintArrow.appendChild(arrowHead);
     hint.appendChild(hintText);
     hint.appendChild(hintArrow);
-    tilesContainer.parentNode.insertBefore(hint, tilesContainer);
+    tilesContainer.insertBefore(hint, tilesContainer.firstChild);
   }
 
   function init() {

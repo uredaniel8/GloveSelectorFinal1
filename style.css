@@ -1656,10 +1656,9 @@ body {
 /* --- Glove group permanent hint --- */
 .glove-group-hint {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 4px;
-  max-width: 260px;
-  margin-bottom: 6px;
+  margin-right: auto;
 }
 
 .glove-group-hint__text {
@@ -1677,10 +1676,7 @@ body {
 
 @media (max-width: 600px) {
   .glove-group-hint {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 4px;
-    justify-content: center;
+    margin-right: 0;
   }
 }
 
